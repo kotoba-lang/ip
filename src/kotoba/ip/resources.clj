@@ -15,14 +15,52 @@
   under `resources/kotoba/ip/` are the canonical, diff-able,
   tooling-friendly source of truth for those constants; a round-trip test
   in `test/` asserts the embedded data matches the resource exactly, so the
-  two can never silently drift."
+  two can never silently drift.
+
+  As of 2026-07-10 the on-disk EDN resources are Datomic/Datascript
+  tx-data (`[{:db/id -1 <ns>/<key> <value> ...}]`, see `/schema.edn` and
+  `edn-datomize.bb`) rather than a bare top-level map, so they stay
+  queryable by generic EDN/Datomic tooling. `load-edn` reconstitutes the
+  original bare map (stripping the file-level namespace and un-blobbing
+  any `pr-str`'d nested values) so every existing caller — including the
+  round-trip tests above — keeps working unchanged."
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]))
 
+(defn- tx-data?
+  "True if `content` is already in `[{:db/id ... } ...]` tx-data shape."
+  [content]
+  (and (vector? content) (seq content) (map? (first content)) (contains? (first content) :db/id)))
+
+(defn- unblob
+  "Reverse of edn-datomize's `attr-value`: non-scalar values are stored as
+  `pr-str`'d strings (\"blob\" attrs); parse them back if `v` looks like one."
+  [v]
+  (if (string? v)
+    (try
+      (let [parsed (edn/read-string v)]
+        (if (coll? parsed) parsed v))
+      (catch Exception _ v))
+    v))
+
+(defn- reconstitute-entity
+  "Turn a single-entity tx-data vector back into the original bare-keyword
+  map (drops `:db/id`, strips the file-level namespace off each attr, and
+  un-blobs any pr-str'd nested values)."
+  [tx-data]
+  (into {}
+        (map (fn [[k v]] [(keyword (name k)) (unblob v)]))
+        (dissoc (first tx-data) :db/id)))
+
 (defn load-edn
-  "Load and parse an EDN resource by classpath-relative path."
+  "Load and parse an EDN resource by classpath-relative path. Reconstitutes
+  Datomic/Datascript tx-data (see `edn-datomize.bb`) back into the original
+  bare map so callers are unaffected by the on-disk tx-data wrapping."
   [path]
   (let [resource (io/resource path)]
     (when-not resource
       (throw (ex-info "missing kotoba.ip resource" {:path path})))
-    (edn/read-string (slurp resource))))
+    (let [content (edn/read-string (slurp resource))]
+      (if (tx-data? content)
+        (reconstitute-entity content)
+        content))))
