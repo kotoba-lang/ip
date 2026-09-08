@@ -1,7 +1,7 @@
 (ns kotoba.ip.ip-xact-test
   "Parity tests ported from kami-ip's `src/ip_xact.rs` `#[cfg(test)]`
   module: `ip_xact_xml_contains_component`, `catalog_find_by_bus_type`."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [clojure.test :refer [deftest is]]
             [kotoba.ip.ip-xact :as ip-xact]))
 
