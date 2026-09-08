@@ -2,7 +2,7 @@
   "Parity tests ported from kami-ip's `src/bus_protocol.rs` `#[cfg(test)]`
   module (`axi4_signal_count`, `axi4_master_contains_signals`), plus an
   extra slave-side check and a `:clj`-only resource round-trip check."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [clojure.test :refer [deftest is testing]]
             [kotoba.ip.bus-protocol :as bus]
             #?(:clj [kotoba.ip.resources :as resources])))
