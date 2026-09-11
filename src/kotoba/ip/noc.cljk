@@ -12,7 +12,7 @@
 (def area-model
   "Empirical area/latency model constants used by `generate-noc`. Canonical
   source is `resources/kotoba/ip/noc/area_model.edn` (round-trip checked in
-  `test/kotoba/ip/noc_test.cljc`); embedded here as plain data so this
+  `test/kotoba/ip/noc_test.cljk`); embedded here as plain data so this
   namespace stays usable without resource IO on every platform."
   {:mesh {:port-cost 5000.0}
    :ring {:node-multiplier 3.0 :port-cost 5000.0}

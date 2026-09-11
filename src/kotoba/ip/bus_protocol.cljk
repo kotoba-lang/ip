@@ -18,7 +18,7 @@
 (def axi4-signal-groups
   "AXI4 signal names grouped by channel. Canonical source is
   `resources/kotoba/ip/bus_protocol/axi4_signals.edn` (round-trip checked
-  in `test/kotoba/ip/bus_protocol_test.cljc`); embedded here as plain data
+  in `test/kotoba/ip/bus_protocol_test.cljk`); embedded here as plain data
   so this namespace stays usable without resource IO on every platform."
   {:write-address ["AWVALID" "AWREADY" "AWADDR" "AWLEN" "AWSIZE" "AWBURST" "AWID" "AWLOCK" "AWCACHE" "AWPROT" "AWQOS"]
    :write-data ["WVALID" "WREADY" "WDATA" "WSTRB" "WLAST"]
