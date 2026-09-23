@@ -24,7 +24,7 @@
   original bare map (stripping the file-level namespace and un-blobbing
   any `pr-str`'d nested values) so every existing caller — including the
   round-trip tests above — keeps working unchanged."
-  (:require [clojure.edn :as edn]
+  (:require [kotoba.lang.edn :as edn]
             [clojure.java.io :as io]))
 
 (defn- tx-data?
