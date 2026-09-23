@@ -3,7 +3,7 @@
   `mesh_router_count`, `ring_has_n_routers`. Plus extra sanity checks for
   the crossbar/tree topologies (untested in the Rust source) and a
   `:clj`-only resource round-trip check."
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kotoba.ip.noc :as noc]
             #?(:clj [kotoba.ip.resources :as resources])))
 

@@ -3,7 +3,7 @@
   module (`axi4_signal_count`, `axi4_master_contains_signals`), plus an
   extra slave-side check and a `:clj`-only resource round-trip check."
   (:require [kotoba.lang.text :as str]
-            [clojure.test :refer [deftest is testing]]
+            [kotoba.test :refer [deftest is testing]]
             [kotoba.ip.bus-protocol :as bus]
             #?(:clj [kotoba.ip.resources :as resources])))
 
