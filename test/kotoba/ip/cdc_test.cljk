@@ -2,7 +2,7 @@
   "Parity tests ported from kami-ip's `src/cdc.rs` `#[cfg(test)]` module:
   `missing_synchronizer_detected`, `multibit_without_gray_is_glitch_prone`,
   `same_clock_not_flagged`."
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kotoba.ip.cdc :as cdc]))
 
 (defn- test-clocks []
