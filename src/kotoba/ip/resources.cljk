@@ -25,7 +25,7 @@
   any `pr-str`'d nested values) so every existing caller — including the
   round-trip tests above — keeps working unchanged."
   (:require [kotoba.lang.edn :as edn]
-            [clojure.java.io :as io]))
+            [kotoba.io :as io]))
 
 (defn- tx-data?
   "True if `content` is already in `[{:db/id ... } ...]` tx-data shape."
